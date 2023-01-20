@@ -13,6 +13,7 @@
     <script src="./routeFunction.js"></script>
     <script src="./Add3DFunction.js"></script>
     <script src="./AddStationInfo.js"></script>
+    <script src="./GetUserGps.js"></script>    
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,6 +40,8 @@
             addRouteToMap(map, traffic_data);
             // Add Station Info to Map
             AddStationInfo(map,location_data);
+            // Get User Gps and Show the location 
+            getAndShowUserGps(map);
         });
     </script>
 
