@@ -5,7 +5,7 @@ function AddStationInfo(map, location_data) {
         let bus_lists_element_result = ""
         for (let index_bus_lists = 0; index_bus_lists < location_element.bus_lists.length; index_bus_lists++) {
             let bus_lists_element = location_element.bus_lists[index_bus_lists];
-            bus_lists_element_result += `<div style="font-size:14px;margin:5px;border-left: 4px solid ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].line_color};padding:5px;">${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].bus_name}號路線 : ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_start} <i class='fas fa-arrow-right' style='font-size:12px'></i>${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_end}</div>`
+            bus_lists_element_result += `<div style="font-size:14px;margin:5px;border-left: 4px solid ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].line_color};padding:5px;"><b>${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].bus_name}號路線 :</b> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_start} -> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_end}</div>`
         }
 
         station_features_lists.push({
