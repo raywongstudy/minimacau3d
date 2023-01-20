@@ -3,6 +3,10 @@ body {
     padding: 0;
 }
 
+.mapboxgl-ctrl-logo {
+    display: none !important;
+}
+
 #map {
     position: absolute;
     top: 0;
