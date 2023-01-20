@@ -5,11 +5,41 @@
     <meta charset="utf-8">
     <title> Mini Macau 3D </title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <script src="./data/bus_coordinates.js"></script> <!-- traffic_data -->
+    <script src="./data/station_coordinates.js"></script> <!-- location_data -->
+    <script src="./routeFunction.js"></script>
+    <script src="./Add3DFunction.js"></script>
+    <script src="./AddstationInfo.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    
-    Hello World
+    <div id="map"></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZXRlcm5pdHkteHlmIiwiYSI6ImNqaDFsdXIxdTA1ODgycXJ5czdjNmF0ZTkifQ.zN7e588TqZOQMWfws-K0Yw';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            // style: 'mapbox://styles/mapbox/streets-v12',
+            style: 'mapbox://styles/mapbox/dark-v11',
+            center: ['113.54884000', '22.16185000'],
+            zoom: 12.5,
+            pitch: 30
+        });
+
+        map.on('load', () => {
+            
+            // Add 3D buildings and remove label layers to enhance the map
+            Add3DFunction(map);
+            // Add Route to Map
+            addRouteToMap(map, traffic_data);
+
+            AddstationInfo(map,location_data)
+        });
+    </script>
+
 </body>
 
 </html>
