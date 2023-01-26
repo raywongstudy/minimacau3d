@@ -33,6 +33,8 @@
         });
 
         map.on('load', () => {
+            // Add Full Screen Control
+            map.addControl(new mapboxgl.FullscreenControl());
             // Add 3D buildings and remove label layers to enhance the map
             Add3DFunction(map);
             // Add Route to Map
@@ -41,6 +43,8 @@
             AddStationInfo(map,station_data);
             // Get User Gps and Show the location 
             getAndShowUserGps(map);
+
+            
         });
     </script>
 
