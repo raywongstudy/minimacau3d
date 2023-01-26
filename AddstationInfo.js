@@ -7,7 +7,10 @@ function AddStationInfo(map, station_data) {
             let bus_lists_element = location_element.bus_lists[index_bus_lists];
             bus_lists_element_result += `<div style="font-size:14px;margin:5px;border-left: 4px solid ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].line_color};padding:5px;"><b>${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].bus_name}號路線 :</b> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_start} -> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_end}</div>`
         }
-
+        station_image_code = location_element.stationCode.split('/')
+        if(station_image_code[1] == undefined){
+            station_image_code[1] = 1
+        }
         station_features_lists.push({
             'type': 'Feature',
             'properties': {
@@ -15,7 +18,7 @@ function AddStationInfo(map, station_data) {
                     `<strong style="font-size:14px">
                         ${location_element.description}
                         <div style="overflow:hidden; border-radius: 5px;">
-                            <img src="https://www.dsat.gov.mo/bres/BUS_STOP_IMG/${location_element.stationCode}_1.JPG" style="width:100%;height:100%;" alt="${location_element.stationCode}.JPG">
+                            <img src="https://www.dsat.gov.mo/bres/BUS_STOP_IMG/${station_image_code[0]}_${station_image_code[1]}.JPG" style="width:100%;height:100%;" alt="${station_image_code[0]}_${station_image_code[1]}.JPG">
                         </div>
                     </strong>
                     ${bus_lists_element_result}`
