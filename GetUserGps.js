@@ -79,7 +79,7 @@ function errorCallback(error) {
 
 function getAndShowUserGps(map) {
     if (navigator.geolocation) {  //if browser support
-        setInterval("navigator.geolocation.getCurrentPosition(successCallback,errorCallback)","5000");
+        navigator.geolocation.watchPosition(successCallback,errorCallback);
     } else {
         console.log("your browser not support ~");
     }
