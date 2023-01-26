@@ -1,12 +1,24 @@
-function AddstationInfo(map, location_data) {
+function AddStationInfo(map, station_data) {
     let station_features_lists = []
-    for (let index = 0; index < location_data.length; index++) {
-        const location_element = location_data[index];
+    for (let index = 0; index < station_data.length; index++) {
+        const location_element = station_data[index];
+        let bus_lists_element_result = ""
+        for (let index_bus_lists = 0; index_bus_lists < location_element.bus_lists.length; index_bus_lists++) {
+            let bus_lists_element = location_element.bus_lists[index_bus_lists];
+            bus_lists_element_result += `<div style="font-size:14px;margin:5px;border-left: 4px solid ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].line_color};padding:5px;"><b>${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].bus_name}號路線 :</b> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_start} -> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_end}</div>`
+        }
+
         station_features_lists.push({
             'type': 'Feature',
             'properties': {
                 'description':
-                    `<strong>${location_element.description}</strong><p>${location_element.bus_lists}</p>`
+                    `<strong style="font-size:14px">
+                        ${location_element.description}
+                        <div style="overflow:hidden; border-radius: 5px;">
+                            <img src="https://www.dsat.gov.mo/bres/BUS_STOP_IMG/${location_element.stationCode}_1.JPG" style="width:100%;height:100%;" alt="${location_element.stationCode}.JPG">
+                        </div>
+                    </strong>
+                    ${bus_lists_element_result}`
             },
             'geometry': {
                 'type': 'Point',
@@ -67,5 +79,6 @@ function AddstationInfo(map, location_data) {
         popup.remove();
     });
 
+    
 
 }

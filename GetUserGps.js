@@ -1,4 +1,9 @@
+GetUserGpsRemark = 0
 function successCallback(position) {
+    if(GetUserGpsRemark == 1){
+        map.removeLayer('user_gps');
+        map.removeSource('user_gps');
+    }
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     user_gps_corrdinates = [longitude, latitude]
@@ -33,6 +38,8 @@ function successCallback(position) {
             'circle-opacity': .7
         }
     });
+    
+    GetUserGpsRemark = 1
 
     // Create a popup, but don't add it to the map yet.
     const popup = new mapboxgl.Popup({
@@ -64,9 +71,6 @@ function successCallback(position) {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
-
-
-
 }
 
 function errorCallback(error) {
@@ -75,11 +79,8 @@ function errorCallback(error) {
 
 function getAndShowUserGps(map) {
     if (navigator.geolocation) {  //if browser support
-        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        setInterval("navigator.geolocation.getCurrentPosition(successCallback,errorCallback)","5000");
     } else {
         console.log("your browser not support ~");
     }
-
-
-
 }

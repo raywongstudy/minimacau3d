@@ -9,7 +9,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
     <script src="./data/route_info_data.js"></script> <!-- route_info_data  *use in other place*--> 
     <script src="./data/bus_coordinates.js"></script> <!-- traffic_data -->
-    <script src="./data/station_coordinates.js"></script> <!-- location_data -->
+    <script src="./data/station_coordinates.js"></script> <!-- station_data -->
     <script src="./routeFunction.js"></script>
     <script src="./Add3DFunction.js"></script>
     <script src="./AddStationInfo.js"></script>
@@ -39,7 +39,7 @@
             // Add Route to Map
             addRouteToMap(map, traffic_data);
             // Add Station Info to Map
-            AddStationInfo(map,location_data);
+            AddStationInfo(map,station_data);
             // Get User Gps and Show the location 
             getAndShowUserGps(map);
         });
