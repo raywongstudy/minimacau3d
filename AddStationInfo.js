@@ -22,7 +22,11 @@ function AddStationInfo(map, station_data) {
                             <img src="https://www.dsat.gov.mo/bres/BUS_STOP_IMG/${station_image_code[0]}_${station_image_code[1]}.JPG" style="width:100%;height:100%;" alt="${station_image_code[0]}_${station_image_code[1]}.JPG">
                         </div>
                     </strong>
-                    ${bus_lists_element_result}`
+                    <div class="mobile_station_scroll">
+                    ${bus_lists_element_result}
+                    </div>
+                    `
+                    
             },
             'geometry': {
                 'type': 'Point',

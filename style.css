@@ -22,3 +22,12 @@ body {
 	background-color: black !important;
 	opacity: .8 !important;;
 }
+
+@media only screen and (max-width: 568px) {
+
+    .mobile_station_scroll{
+        overflow-y: scroll;
+        max-height:200px;
+    }
+
+}
