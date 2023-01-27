@@ -1,13 +1,31 @@
 GetUserGpsRemark = 0
 function successCallback(position) {
     if(GetUserGpsRemark == 1 && latitude != position.coords.latitude && longitude != position.coords.longitude){
-        console.log('successCallback GetUserGpsRemark == 1')
-        map.removeLayer('user_gps'); // need remove layer first
-        map.removeSource('user_gps');
-    }
+        longitude = position.coords.longitude
+        latitude = position.coords.latitude
+        user_gps_corrdinates = [ longitude, latitude]
 
-    if(GetUserGpsRemark == 0 || (latitude != position.coords.latitude && longitude != position.coords.longitude) ){
-        console.log('successCallback GetUserGpsRemark == 0')
+        geojsonSource = map.getSource('user_gps');
+        geojsonSource.setData({
+            'type': 'FeatureCollection',
+            'features': [
+                {
+                    'type': 'Feature',
+                    'properties': {
+                        'description': '<b>你所在的位置</b>'
+                    },
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': user_gps_corrdinates
+                    }
+                },
+            ]
+        })
+
+            // map.getLayer('user_gps'); // need remove layer first
+
+    }
+    if(GetUserGpsRemark == 0){
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
         user_gps_corrdinates = [longitude, latitude]
