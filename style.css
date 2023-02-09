@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+	box-sizing: border-box;
 }
 
 .mapboxgl-ctrl-logo {
@@ -23,11 +24,12 @@ body {
 	opacity: .8 !important;;
 }
 
-@media only screen and (max-width: 568px) {
+@media only screen and (max-width: 500px) {
 
     .mobile_station_scroll{
         overflow-y: scroll;
         max-height:200px;
+        font-size: 10px;
     }
 
 }
@@ -72,4 +74,29 @@ body {
 /* search box mapboxgl-ctrl-geocoder--powered-by disable */
 .mapboxgl-ctrl-geocoder--powered-by{
     display: none !important;
+}
+
+/* show current time box */
+#current-time {
+	color: white;
+	font-family: monospace;
+	font-size: 1.2em;
+	font-weight: 200;
+}
+#current-date {
+	color: white;
+	font-family: monospace;
+	font-size: .8em;
+}
+#current-time-box{
+	background-color: black;
+	opacity: .7;
+	border-radius: 1em;
+	display: flex;
+	position: fixed;
+	z-index: 5;
+	margin: 10px;
+	padding:15px;
+	flex-wrap: wrap;
+	max-width: 120px;
 }

@@ -13,17 +13,25 @@
     <script src="./routeFunction.js"></script>
     <script src="./Add3DFunction.js"></script>
     <script src="./AddStationInfo.js"></script>
-    <script src="./GetUserGps.js"></script>    
+    <script src="./GetUserGps.js"></script> 
+    <script src="./AddBusInMap.js"></script>   
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="startClock()">
     <!-- Load the `mapbox-gl-geocoder` plugin. -->
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
     <div id="map"></div>
+    <div id="current-time-box" >
+        <div id="current-date">2023年1月1日</div>
+        <div id="current-time">12:00:00</div>
+    </div>
+
+    
     <script>
+        
         mapboxgl.accessToken = 'pk.eyJ1IjoiZXRlcm5pdHkteHlmIiwiYSI6ImNqaDFsdXIxdTA1ODgycXJ5czdjNmF0ZTkifQ.zN7e588TqZOQMWfws-K0Yw';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -56,11 +64,14 @@
             AddStationInfo(map,station_data);
             // Get User Gps and Show the location 
             getAndShowUserGps(map); 
+            // Add all bus to the map
+            AddBusInMap(map);
+            
         });
     </script>
 
 </body>
 
-    <script src="./script.js"></script>
+<script src="./script.js"></script>
 
 </html>
