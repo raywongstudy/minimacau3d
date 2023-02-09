@@ -90,7 +90,7 @@ body {
 }
 #current-time-box{
 	background-color: black;
-	opacity: .7;
+	opacity: .6;
 	border-radius: 1em;
 	display: flex;
 	position: fixed;

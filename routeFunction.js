@@ -27,7 +27,8 @@ function addRouteToMap(map, traffic_data){
                 'line-color': traffic_element.line_color,
                 // 'line-width': traffic_element.line_width,
                 'line-width': 8,
-                'line-opacity': traffic_element.line_opacity
+                // 'line-opacity': traffic_element.line_opacity
+                'line-opacity': .4
             }
         });
     }

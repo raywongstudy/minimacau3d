@@ -49,7 +49,7 @@ function AddStationInfo(map, station_data) {
         'source': `bus_station`,
         'paint': {
             'circle-color': 'black',
-            'circle-radius': 8,
+            'circle-radius': 5,
             'circle-stroke-width': 2,
             'circle-stroke-color': '#4264fb',
             'circle-opacity': .4
