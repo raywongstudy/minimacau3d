@@ -4,7 +4,9 @@ function addRouteToMap(map, traffic_data){
 
     for (let index = 0; index < traffic_data.length; index++) {
         const traffic_element = traffic_data[index];
-        map.addSource(traffic_element.routeCode, {
+        let traffic_element_id_name = traffic_element.routeCode + traffic_element.direction
+        console.log(traffic_element_id_name)
+        map.addSource( traffic_element_id_name, {
             'type': 'geojson',
             'data': {
                 'type': 'Feature',
@@ -16,9 +18,9 @@ function addRouteToMap(map, traffic_data){
             }
         });
         map.addLayer({
-            'id': traffic_element.routeCode,
+            'id': traffic_element_id_name,
             'type': 'line',
-            'source': traffic_element.routeCode,
+            'source': traffic_element_id_name,
             'layout': {
                 'line-join': 'round',
                 'line-cap': 'round'
