@@ -5,7 +5,6 @@ function addRouteToMap(map, traffic_data){
     for (let index = 0; index < traffic_data.length; index++) {
         const traffic_element = traffic_data[index];
         let traffic_element_id_name = traffic_element.routeCode + traffic_element.direction
-        console.log(traffic_element_id_name)
         map.addSource( traffic_element_id_name, {
             'type': 'geojson',
             'data': {
