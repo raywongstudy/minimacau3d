@@ -15,12 +15,12 @@ function AddStationInfo(map, station_data) {
         if(station_image_code[1] == undefined){
             station_image_code[1] = 1
         }
-        
+        // onMouseEnter="clearPopupTestCloseTimeout()" onMouseLeave="closePopupTestWithTimeout"
         station_features_lists.push({
             'type': 'Feature',
             'properties': {
                 'description':
-                    `<strong style="font-size:14px">
+                    `<strong style="font-size:14px" >
                         ${location_element.description}
                         <div style="overflow:hidden; border-radius: 5px;">
                             <img src="https://www.dsat.gov.mo/bres/BUS_STOP_IMG/${station_image_code[0]}_${station_image_code[1]}.JPG" style="width:100%;height:100%;" alt="${station_image_code[0]}_${station_image_code[1]}.JPG">
@@ -66,11 +66,34 @@ function AddStationInfo(map, station_data) {
         closeOnClick: false
     });
 
+    map.on('click', 'bus_station', (e) => {
+        map.flyTo({
+        center: e.features[0].geometry.coordinates
+        });
+
+    });
+ 
+
+    this.closePopupTESTWithTimeout = () => {
+        popupTESTCloseTimeout = setTimeout(() => popup.remove(), 2000);
+    }
+    
+    clearPopupTESTCloseTimeout = () => {
+        console.log('run this.clearPopupTESTCloseTimeout ------')
+        console.log(popupTESTCloseTimeout)
+
+        if (popupTESTCloseTimeout) {
+          clearTimeout(popupTESTCloseTimeout);
+          popupTESTCloseTimeout = null;
+        }
+    }
+
+    popupTESTCloseTimeout = null 
     map.on('mouseenter', `bus_station`, (e) => {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
-
         // Copy coordinates array.
+        // this.clearPopupTESTCloseTimeout();
         const coordinates = e.features[0].geometry.coordinates.slice();
         const description = e.features[0].properties.description;
 
@@ -88,7 +111,9 @@ function AddStationInfo(map, station_data) {
 
     map.on('mouseleave', 'bus_station', () => {
         map.getCanvas().style.cursor = '';
-        popup.remove();
+
+        console.log('Mouseleave ~~~~~')
+        this.closePopupTESTWithTimeout();
     });
 
     

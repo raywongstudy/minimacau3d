@@ -104,10 +104,119 @@ async function AddBusInMap(map, station_data) {
         let route_element = bus_api_data[bus_index];
         for (let bus_idx = 0; bus_idx < route_element.busInfoList.length; bus_idx++) {
             let bus_element = route_element.busInfoList[bus_idx];
-            customLayer = GencustomLayer(map, bus_element.busPlate, 3, 2, 2, route_element.color, 14, bus_element.longitude, bus_element.latitude)
+            customLayer = GencustomLayer(map, bus_element.busPlate, 3, 2, 2, [0xFFFFFF,route_element.color[0],route_element.color[0]], 6, bus_element.longitude, bus_element.latitude)
             map.addLayer(customLayer, 'waterway-label');
+            map.moveLayer(customLayer.id); // make layer to the top side
         }
     }
 
 
 }
+
+// async function AddBusInMap(map, station_data) {
+
+//     let bus_api_link = "https://api.minimacau3d.com/bus_location_coordinates.json"
+
+//     let bus_element_id_lists = []
+//     // 定義定時器
+//     setInterval(async () => {
+
+//         let bus_api_data = await fetch(bus_api_link).then((response) => { return response.json()} );
+        
+//         // 移除現有的自定義圖層
+//         if(bus_element_id_lists.length != 0){
+//             for (let id_lists_index = 0; id_lists_index < bus_element_id_lists.length; id_lists_index++) {
+//                 map.removeLayer(bus_element_id_lists[id_lists_index]);
+//             }
+//             bus_element_id_lists = []
+//         }
+//         for (let bus_index = 0; bus_index < bus_api_data.length; bus_index++) {
+//             let route_element = bus_api_data[bus_index];
+//             for (let bus_idx = 0; bus_idx < route_element.busInfoList.length; bus_idx++) {
+//                 let bus_element = route_element.busInfoList[bus_idx];
+//                 // 更新自定義圖層的位置
+//                 let customLayer = GencustomLayer(map, bus_element.busPlate, 3, 2, 2, [0xFFFFFF,route_element.color[0],route_element.color[0]], 2, bus_element.longitude, bus_element.latitude)
+//                 bus_element_id_lists.push(bus_element.busPlate)
+//                 map.addLayer(customLayer, 'waterway-label');
+//                 map.moveLayer(bus_element.busPlate);
+//             }
+//         }
+//         console.log('update')
+//     }, 60000); // 每10秒觸發一次
+// }
+
+
+
+
+// async function AddBusInMap(map, station_data) {
+
+//     let bus_api_link = "https://api.minimacau3d.com/bus_location_coordinates.json"
+//     let bus_api_data = await fetch(bus_api_link).then((response) => { return response.json()} );
+
+//     // Add data source for bus locations
+//     map.addSource('bus-locations', {
+//         type: 'geojson',
+//         data: {
+//             type: 'FeatureCollection',
+//             features: []
+//         }
+//     });
+
+//     for (let bus_index = 0; bus_index < bus_api_data.length; bus_index++) {
+//         let route_element = bus_api_data[bus_index];
+//         for (let bus_idx = 0; bus_idx < route_element.busInfoList.length; bus_idx++) {
+//             let bus_element = route_element.busInfoList[bus_idx];
+//             let feature = {
+//                 type: 'Feature',
+//                 geometry: {
+//                     type: 'Point',
+//                     coordinates: [bus_element.longitude, bus_element.latitude]
+//                 },
+//                 properties: {
+//                     color: route_element.color[0],
+//                     busPlate: bus_element.busPlate
+//                 }
+//             };
+//             // Add bus location to data source
+//             map.getSource('bus-locations').setData({
+//                 type: 'FeatureCollection',
+//                 features: [feature]
+//             });
+
+//             // Add custom layer to map to show bus location
+//             let customLayer = GencustomLayer(map, bus_element.busPlate, 3, 2, 2, [0xFFFFFF, route_element.color[0], route_element.color[0]], 2, bus_element.longitude, bus_element.latitude)
+//             map.addLayer(customLayer, 'waterway-label');
+//             map.moveLayer(customLayer.id);
+//         }
+//     }
+
+//     // Update bus locations every 10 seconds
+//     setInterval(async () => {
+//         bus_api_data = await fetch(bus_api_link).then((response) => { return response.json()} );
+//         let features = [];
+//         for (let bus_index = 0; bus_index < bus_api_data.length; bus_index++) {
+//             let route_element = bus_api_data[bus_index];
+//             for (let bus_idx = 0; bus_idx < route_element.busInfoList.length; bus_idx++) {
+//                 let bus_element = route_element.busInfoList[bus_idx];
+//                 let feature = {
+//                     type: 'Feature',
+//                     geometry: {
+//                         type: 'Point',
+//                         coordinates: [bus_element.longitude, bus_element.latitude]
+//                     },
+//                     properties: {
+//                         color: route_element.color[0],
+//                         busPlate: bus_element.busPlate
+//                     }
+//                 };
+//                 features.push(feature);
+//             }
+//         }
+//         // Update bus locations in data source
+//         map.getSource('bus-locations').setData({
+//             type: 'FeatureCollection',
+//             features: features
+//         });
+//         console.log(features)
+//     }, 10000);
+// }
