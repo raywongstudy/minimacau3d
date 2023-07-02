@@ -95,7 +95,7 @@ function GencustomLayer(map, custom_id, sizeX = 3, sizeY = 2, sizeZ = 2, color =
 
 async function AddBusInMap(map, station_data) {
 
-    let station_features_lists = []
+    // let station_features_lists = []
     let bus_api_link = "https://api.minimacau3d.com/bus_location_coordinates.json"
     let bus_api_data = await fetch(bus_api_link).then((response) => { return response.json()} );
     let customLayer = ''
@@ -109,7 +109,6 @@ async function AddBusInMap(map, station_data) {
             map.moveLayer(customLayer.id); // make layer to the top side
         }
     }
-
 
 }
 
