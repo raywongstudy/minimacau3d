@@ -5,6 +5,8 @@ function AddStationInfo(map, station_data) {
         let bus_lists_element_result = ""
         for (let index_bus_lists = 0; index_bus_lists < location_element.bus_lists.length; index_bus_lists++) {
             let bus_lists_element = location_element.bus_lists[index_bus_lists];
+
+            // console.log(bus_lists_element) //show the bus for get witch bus I need to add
             // special handle
             if(bus_lists_element == '701X'){
                 bus_lists_element = '701x'
