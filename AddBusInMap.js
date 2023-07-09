@@ -35,12 +35,12 @@ function GencustomLayer(map, custom_id, sizeX = 3, sizeY = 2, sizeZ = 2, color =
         let material = [
             new THREE.MeshBasicMaterial({ color: color[0]}), new THREE.MeshBasicMaterial({ color: color[0]}), new THREE.MeshBasicMaterial({ color: color[1]}), new THREE.MeshBasicMaterial({ color: color[1]}), new THREE.MeshBasicMaterial({ color: color[2]}), new THREE.MeshBasicMaterial({ color: color[2]})
         ];
-        let cube = new THREE.Mesh( geometry, material );
-        cube.scale.x = scaleSize
-        cube.scale.y = scaleSize
-        cube.scale.z = scaleSize
+        this.cube = new THREE.Mesh( geometry, material );
+        this.cube.scale.x = scaleSize
+        this.cube.scale.y = scaleSize
+        this.cube.scale.z = scaleSize
 
-        this.scene.add( cube );
+        this.scene.add( this.cube );
         this.map = map;
 
         // use the Mapbox GL JS map canvas for three.js
@@ -87,6 +87,10 @@ function GencustomLayer(map, custom_id, sizeX = 3, sizeY = 2, sizeZ = 2, color =
             this.camera.projectionMatrix = m.multiply(l);
             this.renderer.resetState();
             this.renderer.render(this.scene, this.camera);
+
+            this.cube.rotation.x += 0.01;
+            this.cube.rotation.y += 0.01;
+
             this.map.triggerRepaint();
         }
     }
