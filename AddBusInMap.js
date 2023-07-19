@@ -162,10 +162,9 @@ function GenAllCustomLayer(map, route_elements, sizeX = 3, sizeY = 2, sizeZ = 2,
             
             this.map.triggerRepaint();
         },
-        updateBusPositions: async function() {
-            // console.log("======== run updateBusPositions! =======")
-            let response_bus_data = await fetch('https://api.minimacau3d.com/bus_location_coordinates.json').then((response) => { return response.json()} );
 
+        updateBusPositions: async function(response_bus_data) {
+            // console.log("======== run updateBusPositions! =======")
             let filter_bus_lists = []
             if(filter_bus_lists.length != 0){
                 response_bus_data = response_bus_data.filter(item => filter_bus_lists.includes(item.bus_name));
@@ -210,8 +209,6 @@ function GenAllCustomLayer(map, route_elements, sizeX = 3, sizeY = 2, sizeZ = 2,
         }
     }
 
-    // Update bus positions every 10 seconds
-    setInterval(() => customLayer.updateBusPositions(), 10000);
 
     return customLayer
 }
@@ -223,6 +220,7 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
     let bus_api_link = "https://api.minimacau3d.com/bus_location_coordinates.json"
     let bus_api_data = await fetch(bus_api_link).then((response) => { return response.json()} );
     let customLayer = ''
+    let customLayers = []
     //filter the bus data lists
 
     if(filter_bus_lists.length != 0){
@@ -237,7 +235,7 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
         customLayer = GenAllCustomLayer(map,route_elements, 3, 2, 2, [0xFFFFFF,route_elements.color[0],route_elements.color[0]], 6)
         map.addLayer(customLayer, 'waterway-label');
         map.moveLayer(customLayer.id); // make layer to the top side
-
+        customLayers.push(customLayer);
         // 用在marked 位置對比
         // for (let index = 0; index < route_elements.busInfoList.length; index++) {
         //     let element = route_elements.busInfoList[index];
@@ -246,5 +244,11 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
         // }
 
     }
+    
+    // Update bus positions every 10 seconds
+    setInterval(async () => {
+        let response_bus_data = await fetch('https://api.minimacau3d.com/bus_location_coordinates.json').then((response) => { return response.json()} );
+        customLayers.forEach(layer => layer.updateBusPositions(response_bus_data));
+    }, 15000);
 
 }
