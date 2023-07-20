@@ -59,3 +59,25 @@ document.getElementById("current-date").innerText = getCurrentDate();
 
 
 
+
+// for the stations button in map panel 
+var stationVisibility = true;
+
+// 獲取按鈕元素
+var toggle_station_button = document.getElementById('toggle-station-button');
+
+// 為按鈕添加點擊事件監聽器
+toggle_station_button.addEventListener('click', function () {
+	// 切換站點的可見性
+	stationVisibility = !stationVisibility;
+	// 根據站點的可見性設置地圖的層
+	map.setLayoutProperty('bus_station', 'visibility', stationVisibility ? 'visible' : 'none');
+	// 切換按鈕顏色
+	if (stationVisibility) {
+		// 如果站點可見，設置按鈕為原色
+		toggle_station_button.style.backgroundColor = "";
+	} else {
+		// 如果站點不可見，設置按鈕為灰色
+		toggle_station_button.style.backgroundColor = "gray";
+	}
+});

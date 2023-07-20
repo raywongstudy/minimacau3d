@@ -1,10 +1,19 @@
 
 // This function mainly for use the bus_corrdinates.js traffic_data to draw the route in the map
-function addRouteToMap(map, traffic_data){
+function addRouteToMap(map, traffic_data, filter_traffic_lists=[]){
 
-    for (let index = 0; index < traffic_data.length; index++) {
-        const traffic_element = traffic_data[index];
+    if(filter_traffic_lists.length != 0){
+        filteredTrafficData = traffic_data.filter(item => filter_traffic_lists.includes(item.routeCode));
+    }else{
+        filteredTrafficData = traffic_data
+    }
+    var traffic_element_id_name_all = []
+    // console.log("filteredTrafficData:",filteredTrafficData)
+    for (let index = 0; index < filteredTrafficData.length; index++) {
+        const traffic_element = filteredTrafficData[index];
         let traffic_element_id_name = traffic_element.routeCode + traffic_element.direction
+        traffic_element_id_name_all.push(traffic_element_id_name)
+
         map.addSource( traffic_element_id_name, {
             'type': 'geojson',
             'data': {
@@ -33,5 +42,7 @@ function addRouteToMap(map, traffic_data){
             }
         });
     }
+
+    return traffic_element_id_name_all
 
 }

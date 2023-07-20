@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title> Mini Macau 3D </title>
+    <script src="https://kit.fontawesome.com/fdebb7a589.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
@@ -26,16 +27,27 @@
     <!-- Load the `mapbox-gl-geocoder` plugin. -->
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
-
+    
     <div id="map"></div>
-    <div id="current-time-box" style="display:none">
-        <div id="current-date">2023年1月1日</div>
+    <!-- <div id="current-time-box" style="display:none"> -->
+    <div id="current-time-box">
+            <div id="current-date">2023年1月1日</div>
         <div id="current-time">12:00:00</div>
     </div>
+    <div id="map_panel">
+        <!-- AddStationInfo -->
+        <a id="toggle-station-button" class="panel_button"> 
+            <i class="fa-solid fa-location-dot"></i> 
+        </a>
+        <!-- AddStationInfo -->
+        <a id="toggle-route-button" class="panel_button"> 
+            <i class="fa-solid fa-route"></i>
+        </a>
+    </div>
+    
 
     
     <script>
-        
         mapboxgl.accessToken = 'pk.eyJ1IjoiZXRlcm5pdHkteHlmIiwiYSI6ImNqaDFsdXIxdTA1ODgycXJ5czdjNmF0ZTkifQ.zN7e588TqZOQMWfws-K0Yw';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -43,11 +55,10 @@
             // style: 'mapbox://styles/mapbox/streets-v12',
             style: 'mapbox://styles/mapbox/dark-v11',
             attributionControl: false,
-            center: ['113.54884000', '22.16185000'],
+            center: ['113.54884000', '22.16185000'], // need to change Add Bus In Map
             zoom: 12.5,
             pitch: 30
         });
-
         // Add search box
         map.addControl(
             new MapboxGeocoder({
@@ -55,7 +66,7 @@
             mapboxgl: mapboxgl
             })
         );
-                
+        let trafficIds;
         // Add Main Function 
         map.on('load', () => {
             // Add Full Screen Control
@@ -64,20 +75,53 @@
             Add3DFunction(map);
 
             // Add Route to Map
-            addRouteToMap(map, traffic_data);
-
+            trafficIds = addRouteToMap(map, traffic_data,[]); //addRouteToMap(map, traffic_data,["00N1A","00N1B"]); 
+            
             // Add Station Info to Map
-            AddStationInfo(map,station_data);
+            AddStationInfo(map,station_data,[]);
 
             // Get User Gps and Show the location 
             getAndShowUserGps(map);
 
             // Add all bus to the map
-            AddBusInMap(map);
+            AddBusInMap(map,[]); // AddBusInMap(map,["1","2"]);
            
             // Add car to the map for play
             // AddCarPlay(map);
-        });
+
+            // for the route button in map panel 
+            var routeVisibility = true;
+
+            // 獲取按鈕元素
+            var toggle_route_button = document.getElementById('toggle-route-button');
+
+            // 為按鈕添加點擊事件監聽器
+            toggle_route_button.addEventListener('click', function () {
+                // 切換站點的可見性
+                routeVisibility = !routeVisibility;
+                // 根據站點的可見性設置地圖的層
+                if(trafficIds){
+                    trafficIds.forEach(trafficId => {
+                        map.setLayoutProperty(trafficId, 'visibility', routeVisibility ? 'visible' : 'none');	
+                    });
+                }
+                
+                // 切換按鈕顏色
+                if (routeVisibility) {
+                    // 如果站點可見，設置按鈕為原色
+                    toggle_route_button.style.backgroundColor = "";
+                } else {
+                    // 如果站點不可見，設置按鈕為灰色
+                    toggle_route_button.style.backgroundColor = "gray";
+                }
+            });
+
+
+
+        });            
+
+
+
     </script>
 
 </body>

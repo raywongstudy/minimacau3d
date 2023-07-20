@@ -1,7 +1,22 @@
-function AddStationInfo(map, station_data) {
+function AddStationInfo(map, station_data,filter_bus_lists = []) {
+
+    if(filter_bus_lists.length != 0){
+        let filterValues = filter_bus_lists; // This is the array of values you want to filter by //e.g ["1", "1A"]
+
+        filteredStationData = station_data.filter(item => 
+            filterValues.some(value => item.bus_lists.includes(value))
+        ).map(item => ({
+            ...item,
+            bus_lists: item.bus_lists.filter(bus => filterValues.includes(bus))
+        }));
+        // console.log("filteredStationData:",filteredStationData);
+    }else{
+        filteredStationData = station_data
+    }
+
     let station_features_lists = []
-    for (let index = 0; index < station_data.length; index++) {
-        const location_element = station_data[index];
+    for (let index = 0; index < filteredStationData.length; index++) {
+        const location_element = filteredStationData[index];
         let bus_lists_element_result = ""
         for (let index_bus_lists = 0; index_bus_lists < location_element.bus_lists.length; index_bus_lists++) {
             let bus_lists_element = location_element.bus_lists[index_bus_lists];
