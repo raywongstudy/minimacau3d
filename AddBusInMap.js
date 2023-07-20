@@ -249,6 +249,6 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
     setInterval(async () => {
         let response_bus_data = await fetch('https://api.minimacau3d.com/bus_location_coordinates.json').then((response) => { return response.json()} );
         customLayers.forEach(layer => layer.updateBusPositions(response_bus_data));
-    }, 10000);
 
+    }, 15000);
 }
