@@ -183,7 +183,7 @@ function GenAllCustomLayer(map, route_elements, sizeX = 3, sizeY = 2, sizeZ = 2,
                     } )
 
                     if(custom_cube.length == 1){
-                        animation_number = 900 // 取決於API的Speed不能大於API Speed |  animation_number = to the time , about 60 = around 1s , 1800 = around 30s, 900 = around 15s, 1500 = around 25s
+                        animation_number = 90 // 取決於API的Speed不能大於API Speed |  animation_number = to the time , about 60 = around 1s , 1800 = around 30s, 900 = around 15s, 1500 = around 25s
                         // console.log("===========", newBusInfoList[bus_idx].busPlate, "===========")
                         custom_cube[0].userData.initialPosition = [custom_cube[0].position.y, -custom_cube[0].position.x];
                         custom_cube[0].userData.targetPosition = calculateDistanceInDirection(parseFloat(newBusInfoList[bus_idx].longitude), parseFloat(newBusInfoList[bus_idx].latitude), longitude, latitude);
@@ -250,5 +250,5 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
         let response_bus_data = await fetch('https://api.minimacau3d.com/bus_location_coordinates.json').then((response) => { return response.json()} );
         customLayers.forEach(layer => layer.updateBusPositions(response_bus_data));
 
-    }, 15000);
+    }, 10000);
 }

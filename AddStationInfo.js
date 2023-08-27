@@ -23,9 +23,9 @@ function AddStationInfo(map, station_data,filter_bus_lists = []) {
 
             // console.log(bus_lists_element) //show the bus for get witch bus I need to add
             // special handle
-            if(bus_lists_element == '701X'){
-                bus_lists_element = '701x'
-            }
+            // if(bus_lists_element == '701X'){
+            //     bus_lists_element = '701x'
+            // }
             bus_lists_element_result += `<div style="font-size:14px;margin:5px;border-left: 4px solid ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].line_color};padding:5px;"><b>${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].bus_name}號路線 :</b> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_start} -> ${route_info_data.filter(e=> { return e.bus_name == bus_lists_element })[0].route_end}</div>`
         }
         station_image_code = location_element.stationCode.split('/')
