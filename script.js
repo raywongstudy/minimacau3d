@@ -21,8 +21,13 @@ if (typeof input !== "string") padded = input.toString();
 return padded.padStart(length, "0");
 };
 
-function getCurrentDate() {
-	var myDate = new Date();
+function getCurrentDate(myDate) {
+	if(myDate != 0){
+		var myDate = new Date(myDate);
+		console.log('test')
+	}else{
+		var myDate = new Date();
+	}
 	var year = myDate.getFullYear(); //年
 	var month = myDate.getMonth() + 1; //月
 	var day = myDate.getDate(); //日
@@ -53,8 +58,46 @@ function getCurrentDate() {
 	var str = year + "年" + month + "月" + day + "日 " + days;
 	return str;
 }
-document.getElementById("current-date").innerText = getCurrentDate();
+document.getElementById("current-date").innerText = getCurrentDate(0);
 
+
+function simulateTimeFlow(start, end, totalDuration) {
+	document.getElementById("current-date").innerText = getCurrentDate(start);
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+
+    // 計算兩個日期之間的總毫秒數差異
+    let totalMillis = endDate - startDate;
+    
+    // 計算模擬的總持續時間（毫秒）
+    let totalSimulationMillis = totalDuration * 1000;
+
+    // 計算每次更新的毫秒數以及時間的遞增量
+    // 假設我們每50毫秒更新一次
+    let updateIntervalMillis = 50;
+    let incrementPerUpdate = totalMillis / (totalSimulationMillis / updateIntervalMillis);
+    
+    function update() {
+        // 遞增時間
+        startDate = new Date(startDate.getTime() + incrementPerUpdate);
+        let h = padWithZeroes(startDate.getHours(), 2);
+        let m = padWithZeroes(startDate.getMinutes(), 2);
+        let s = padWithZeroes(startDate.getSeconds(), 2);
+
+        // 更新頁面上的時間
+        document.getElementById("current-time").innerHTML = `${h}:${m}:${s}`;
+
+        // 如果還沒有到達結束日期，則繼續更新
+        if (startDate < endDate) {
+            setTimeout(update, updateIntervalMillis);
+        }else{
+			document.getElementById("current-date").innerText = getCurrentDate(0);
+		}
+    }
+
+    update();
+}
+// 調用函數模擬時間流逝
 
 
 

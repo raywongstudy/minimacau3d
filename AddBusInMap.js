@@ -249,6 +249,8 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
     function RunHistoryData() {
         clearInterval(autoGetBusDataId);
         alert("現時數據設置為歷史測試數據～\n數據來自澳門2023年8月28日早上10點00分-10點10分巴士數據")
+        console.log("bus_location_coordinates_lists.length",bus_location_coordinates_lists.length)
+        simulateTimeFlow("2023-08-28T10:00:00", "2023-08-28T10:10:00", (33) ); // 改左上時間加速模擬功能
         document.querySelector("#demo-data-button").style.display = "none"
         for (let list_index = 0; list_index < bus_location_coordinates_lists.length; list_index++) {
             let list_element = bus_location_coordinates_lists[list_index];
