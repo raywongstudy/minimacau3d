@@ -83,7 +83,7 @@ function GenAllCustomLayer(map, route_elements, sizeX = 3, sizeY = 2, sizeZ = 2,
             cube.userData.deltaPosition = [0,0]
             cube.userData.animation_number = 0
             
-            console.log("cube.userData:", cube.userData)
+            // console.log("cube.userData:", cube.userData)
             
             cube.position.set(-cube.userData.initialPosition[1], cube.userData.initialPosition[0], 0);
 
@@ -165,7 +165,7 @@ function GenAllCustomLayer(map, route_elements, sizeX = 3, sizeY = 2, sizeZ = 2,
 
         updateBusPositions: async function(response_bus_data) {
             // console.log("======== run updateBusPositions! =======")
-            let filter_bus_lists = []
+            let filter_bus_lists = [] //如果要選擇單一線看用
             if(filter_bus_lists.length != 0){
                 response_bus_data = response_bus_data.filter(item => filter_bus_lists.includes(item.bus_name));
             }else{
@@ -245,10 +245,41 @@ async function AddBusInMap(map, filter_bus_lists=[]) {
 
     }
     
-    // Update bus positions every 10 seconds
-    setInterval(async () => {
+    // 按下按鈕時呼叫此函數
+    function RunHistoryData() {
+        clearInterval(autoGetBusDataId);
+        alert("現時數據設置為歷史測試數據～\n數據來自澳門2023年8月28日早上10點00分-10點10分巴士數據")
+        document.querySelector("#demo-data-button").style.display = "none"
+        for (let list_index = 0; list_index < bus_location_coordinates_lists.length; list_index++) {
+            let list_element = bus_location_coordinates_lists[list_index];
+            setTimeout(async () => {
+                console.log("Delayed for "+list_index+" second.");
+                fetch_list_element_url = "https://api.minimacau3d.com/20230828/" + list_element.split("_")[0] + "_location_coordinates_" + list_element.split("_")[1]
+                let response_bus_data = await fetch(fetch_list_element_url).then((response) => { return response.json()} );
+                customLayers.forEach(layer => layer.updateBusPositions(response_bus_data));
+                if(list_index+1 == bus_location_coordinates_lists.length){
+                    document.querySelector("#demo-data-button").style.display = "flex"
+                    alert("歷史數據展示完成！\n現時數據設置為實時數據～")
+                    let autoGetBusDataId = setInterval(async () => {
+                        let response_bus_data = await fetch('https://api.minimacau3d.com/bus_location_coordinates.json').then((response) => { return response.json()} );
+                        customLayers.forEach(layer => layer.updateBusPositions(response_bus_data));
+                    }, 3000);
+                }
+                }, list_index * 1000);
+        }
+    }
+    // Update bus positions every 10 seconds在 setInterval | 函數中儲存 ID
+    let autoGetBusDataId = setInterval(async () => {
         let response_bus_data = await fetch('https://api.minimacau3d.com/bus_location_coordinates.json').then((response) => { return response.json()} );
         customLayers.forEach(layer => layer.updateBusPositions(response_bus_data));
+    }, 5000);
 
-    }, 10000);
+    document.querySelector("#demo-data-button").addEventListener("click", RunHistoryData); 
+  
+    // Update bus positions every 1 seconds use the data lists
+    let autoHistoryBusDataId;
+    let bus_location_coordinates_lists = ["bus_20230828T100016.json", "bus_20230828T100037.json", "bus_20230828T100056.json", "bus_20230828T100115.json", "bus_20230828T100134.json", "bus_20230828T100153.json", "bus_20230828T100214.json", "bus_20230828T100233.json", "bus_20230828T100254.json", "bus_20230828T100314.json", "bus_20230828T100333.json", "bus_20230828T100352.json", "bus_20230828T100413.json", "bus_20230828T100432.json", "bus_20230828T100451.json", "bus_20230828T100512.json", "bus_20230828T100531.json", "bus_20230828T100550.json", "bus_20230828T100611.json", "bus_20230828T100630.json", "bus_20230828T100649.json", "bus_20230828T100709.json", "bus_20230828T100727.json", "bus_20230828T100746.json", "bus_20230828T100806.json", "bus_20230828T100825.json", "bus_20230828T100846.json", "bus_20230828T100906.json", "bus_20230828T100926.json", "bus_20230828T100945.json", "bus_20230828T101005.json", "bus_20230828T101024.json", "bus_20230828T101044.json", "bus_20230828T101105.json"]
+    // let bus_location_coordinates_lists = ["bus_20230828T100016.json", "bus_20230828T100037.json", "bus_20230828T100056.json", "bus_20230828T100115.json", "bus_20230828T100134.json", "bus_20230828T100153.json", "bus_20230828T100214.json", "bus_20230828T100233.json", "bus_20230828T100254.json", "bus_20230828T100314.json", "bus_20230828T100333.json", "bus_20230828T100352.json", "bus_20230828T100413.json", "bus_20230828T100432.json", "bus_20230828T100451.json", "bus_20230828T100512.json", "bus_20230828T100531.json", "bus_20230828T100550.json", "bus_20230828T100611.json", "bus_20230828T100630.json", "bus_20230828T100649.json", "bus_20230828T100709.json", "bus_20230828T100727.json", "bus_20230828T100746.json", "bus_20230828T100806.json", "bus_20230828T100825.json", "bus_20230828T100846.json", "bus_20230828T100906.json", "bus_20230828T100926.json", "bus_20230828T100945.json", "bus_20230828T101005.json", "bus_20230828T101024.json", "bus_20230828T101044.json", "bus_20230828T101105.json", "bus_20230828T101123.json", "bus_20230828T101142.json", "bus_20230828T101202.json", "bus_20230828T101222.json", "bus_20230828T101241.json", "bus_20230828T101300.json", "bus_20230828T101319.json", "bus_20230828T101338.json", "bus_20230828T101357.json", "bus_20230828T101417.json", "bus_20230828T101437.json", "bus_20230828T101456.json", "bus_20230828T101516.json", "bus_20230828T101536.json", "bus_20230828T101555.json", "bus_20230828T101615.json", "bus_20230828T101634.json", "bus_20230828T101654.json", "bus_20230828T101714.json", "bus_20230828T101735.json", "bus_20230828T101754.json", "bus_20230828T101814.json", "bus_20230828T101834.json", "bus_20230828T101854.json", "bus_20230828T101915.json", "bus_20230828T101935.json", "bus_20230828T101954.json", "bus_20230828T102014.json", "bus_20230828T102034.json", "bus_20230828T102053.json", "bus_20230828T102113.json", "bus_20230828T102132.json", "bus_20230828T102152.json", "bus_20230828T102214.json", "bus_20230828T102233.json", "bus_20230828T102253.json", "bus_20230828T102313.json", "bus_20230828T102332.json", "bus_20230828T102352.json", "bus_20230828T102413.json", "bus_20230828T102432.json", "bus_20230828T102452.json", "bus_20230828T102511.json", "bus_20230828T102530.json", "bus_20230828T102550.json", "bus_20230828T102611.json", "bus_20230828T102630.json", "bus_20230828T102650.json", "bus_20230828T102711.json", "bus_20230828T102731.json", "bus_20230828T102750.json", "bus_20230828T102811.json", "bus_20230828T102830.json", "bus_20230828T102850.json", "bus_20230828T102911.json", "bus_20230828T102931.json", "bus_20230828T102951.json", "bus_20230828T103010.json", "bus_20230828T103031.json", "bus_20230828T103051.json", "bus_20230828T103111.json", "bus_20230828T103131.json", "bus_20230828T103150.json", "bus_20230828T103213.json", "bus_20230828T103233.json", "bus_20230828T103254.json", "bus_20230828T103315.json", "bus_20230828T103334.json", "bus_20230828T103354.json", "bus_20230828T103414.json", "bus_20230828T103434.json", "bus_20230828T103453.json", "bus_20230828T103514.json", "bus_20230828T103536.json", "bus_20230828T103555.json", "bus_20230828T103615.json", "bus_20230828T103635.json", "bus_20230828T103654.json", "bus_20230828T103715.json", "bus_20230828T103734.json", "bus_20230828T103754.json", "bus_20230828T103815.json", "bus_20230828T103834.json", "bus_20230828T103854.json", "bus_20230828T103914.json", "bus_20230828T103934.json", "bus_20230828T103956.json", "bus_20230828T104015.json", "bus_20230828T104035.json", "bus_20230828T104055.json", "bus_20230828T104115.json", "bus_20230828T104135.json", "bus_20230828T104154.json", "bus_20230828T104215.json", "bus_20230828T104235.json", "bus_20230828T104254.json", "bus_20230828T104315.json", "bus_20230828T104334.json", "bus_20230828T104353.json", "bus_20230828T104413.json", "bus_20230828T104433.json", "bus_20230828T104452.json", "bus_20230828T104512.json", "bus_20230828T104533.json", "bus_20230828T104552.json", "bus_20230828T104612.json", "bus_20230828T104631.json", "bus_20230828T104651.json", "bus_20230828T104711.json", "bus_20230828T104730.json", "bus_20230828T104749.json", "bus_20230828T104809.json", "bus_20230828T104828.json", "bus_20230828T104847.json", "bus_20230828T104907.json", "bus_20230828T104927.json", "bus_20230828T104946.json", "bus_20230828T105006.json", "bus_20230828T105025.json", "bus_20230828T105045.json", "bus_20230828T105105.json", "bus_20230828T105124.json", "bus_20230828T105143.json", "bus_20230828T105203.json", "bus_20230828T105222.json", "bus_20230828T105242.json", "bus_20230828T105303.json", "bus_20230828T105322.json", "bus_20230828T105341.json", "bus_20230828T105400.json", "bus_20230828T105419.json", "bus_20230828T105438.json", "bus_20230828T105458.json", "bus_20230828T105518.json", "bus_20230828T105537.json", "bus_20230828T105555.json", "bus_20230828T105614.json", "bus_20230828T105634.json", "bus_20230828T105653.json", "bus_20230828T105712.json", "bus_20230828T105731.json", "bus_20230828T105753.json", "bus_20230828T105812.json", "bus_20230828T105831.json", "bus_20230828T105851.json", "bus_20230828T105911.json", "bus_20230828T105930.json", "bus_20230828T105950.json", "bus_20230828T110010.json", "bus_20230828T110029.json", "bus_20230828T110049.json", "bus_20230828T110108.json", "bus_20230828T110128.json", "bus_20230828T110147.json", "bus_20230828T110206.json", "bus_20230828T110225.json", "bus_20230828T110245.json", "bus_20230828T110304.json", "bus_20230828T110323.json", "bus_20230828T110342.json", "bus_20230828T110402.json", "bus_20230828T110421.json", "bus_20230828T110442.json", "bus_20230828T110502.json", "bus_20230828T110522.json", "bus_20230828T110542.json", "bus_20230828T110602.json", "bus_20230828T110621.json", "bus_20230828T110640.json", "bus_20230828T110700.json", "bus_20230828T110720.json", "bus_20230828T110742.json", "bus_20230828T110803.json", "bus_20230828T110823.json", "bus_20230828T110842.json", "bus_20230828T110902.json", "bus_20230828T110922.json", "bus_20230828T110942.json", "bus_20230828T111002.json", "bus_20230828T111021.json", "bus_20230828T111042.json", "bus_20230828T111103.json", "bus_20230828T111122.json", "bus_20230828T111141.json"]
+
+
 }

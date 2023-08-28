@@ -81,3 +81,55 @@ toggle_station_button.addEventListener('click', function () {
 		toggle_station_button.style.backgroundColor = "gray";
 	}
 });
+
+
+
+
+// for the route button in map panel 
+var routeVisibility = true;
+
+// 獲取按鈕元素
+var toggle_route_button = document.getElementById('toggle-route-button');
+
+// 為按鈕添加點擊事件監聽器
+toggle_route_button.addEventListener('click', function () {
+	// 切換站點的可見性
+	routeVisibility = !routeVisibility;
+	// 根據站點的可見性設置地圖的層
+	if(trafficIds){
+		trafficIds.forEach(trafficId => {
+			map.setLayoutProperty(trafficId, 'visibility', routeVisibility ? 'visible' : 'none');	
+		});
+	}
+	
+	// 切換按鈕顏色
+	if (routeVisibility) {
+		// 如果站點可見，設置按鈕為原色
+		toggle_route_button.style.backgroundColor = "";
+	} else {
+		// 如果站點不可見，設置按鈕為灰色
+		toggle_route_button.style.backgroundColor = "gray";
+	}
+});
+
+
+
+// for the route button in map panel 
+// var demoBtnVisibility = true;
+
+// 獲取按鈕元素
+// var toggle_demo_button = document.getElementById('demo-data-button');
+
+// 為按鈕添加點擊事件監聽器
+// toggle_demo_button.addEventListener('click', function () {
+// 	// 切換站點的可見性
+// 	demoBtnVisibility = !demoBtnVisibility;
+// 	// 切換按鈕顏色
+// 	if (demoBtnVisibility) {
+// 		// 如果站點可見，設置按鈕為原色
+// 		toggle_demo_button.style.backgroundColor = "";
+// 	} else {
+// 		// 如果站點不可見，設置按鈕為灰色
+// 		toggle_demo_button.style.backgroundColor = "gray";
+// 	}
+// });
