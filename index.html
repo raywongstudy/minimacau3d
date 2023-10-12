@@ -84,43 +84,20 @@
             trafficIds = addRouteToMap(map, traffic_data,[]); //addRouteToMap(map, traffic_data,["00N1A","00N1B"]); 
             
             // Add Station Info to Map
-            AddStationInfo(map,station_data,[]);
+            AddStationInfo(map,station_data,[]); // AddStationInfo(map,station_data,["1","2"]);
 
             // Get User Gps and Show the location 
             getAndShowUserGps(map);
 
             // Add all bus to the map
-            AddBusInMap(map,[]); // AddBusInMap(map,["1","2"]);
+            // "https://api.minimacau3d.com/bus_location_coordinates.json" // 生產數據
+            // "https://api.minimacau3d.com/bus_location_coordinates_test.json" //測試數據
+            AddBusInMap(map,[], "https://api.minimacau3d.com/bus_location_coordinates.json"); // AddBusInMap(map,["1","2"]);
            
             // Add car to the map for play
             // AddCarPlay(map);
 
-            // for the route button in map panel 
-            var routeVisibility = true;
 
-            // 獲取按鈕元素
-            var toggle_route_button = document.getElementById('toggle-route-button');
-
-            // 為按鈕添加點擊事件監聽器
-            toggle_route_button.addEventListener('click', function () {
-                // 切換站點的可見性
-                routeVisibility = !routeVisibility;
-                // 根據站點的可見性設置地圖的層
-                if(trafficIds){
-                    trafficIds.forEach(trafficId => {
-                        map.setLayoutProperty(trafficId, 'visibility', routeVisibility ? 'visible' : 'none');	
-                    });
-                }
-                
-                // 切換按鈕顏色
-                if (routeVisibility) {
-                    // 如果站點可見，設置按鈕為原色
-                    toggle_route_button.style.backgroundColor = "";
-                } else {
-                    // 如果站點不可見，設置按鈕為灰色
-                    toggle_route_button.style.backgroundColor = "gray";
-                }
-            });
 
 
 

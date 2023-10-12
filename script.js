@@ -24,7 +24,6 @@ return padded.padStart(length, "0");
 function getCurrentDate(myDate) {
 	if(myDate != 0){
 		var myDate = new Date(myDate);
-		console.log('test')
 	}else{
 		var myDate = new Date();
 	}
