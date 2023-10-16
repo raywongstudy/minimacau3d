@@ -196,7 +196,7 @@ function GenAllCustomLayer(map, route_elements, sizeX = 3, sizeY = 2, sizeZ = 2,
                     if(custom_cube.length == 1){
                         // console.log("需要進行移動的巴士:",custom_cube)
 
-                        animation_number = 90 // 取決於API的Speed不能大於API Speed |  animation_number = to the time , about 60 = around 1s , 1800 = around 30s, 900 = around 15s, 1500 = around 25s
+                        animation_number = 120 // 取決於API的Speed不能大於API Speed |  animation_number = to the time , about 60 = around 1s , 1800 = around 30s, 900 = around 15s, 1500 = around 25s
                         // console.log("===========", newBusInfoList[bus_idx].busPlate, "===========")
                         custom_cube[0].userData.source_position = [parseFloat(newBusInfoList[bus_idx].longitude), parseFloat(newBusInfoList[bus_idx].latitude)]
                         custom_cube[0].userData.initialPosition = [custom_cube[0].position.y, -custom_cube[0].position.x];
@@ -360,7 +360,7 @@ async function AddBusInMap(map, filter_bus_lists=[], bus_api_link) {
                     let autoGetBusDataId = setInterval(async () => {
                         let response_bus_data = await fetch(bus_api_link).then((response) => { return response.json()} );
                         customLayers.forEach(layer => layer.updateBusPositions(response_bus_data, filter_bus_lists));
-                    }, 5000);
+                    }, 3000);
                 }
                 }, list_index * 1000);
         }
