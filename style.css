@@ -1,0 +1,581 @@
+body {
+    margin: 0;
+    padding: 0;
+	box-sizing: border-box;
+}
+
+/* 加載頁面樣式 -------------------------------- */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(90, 138, 198, 0.3);
+}
+
+.logo-container {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 30px;
+    animation: pulse 2s infinite;
+    background-color: rgba(61, 79, 101, 0.2);
+    border-radius: 50%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-logo {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px rgba(160, 200, 255, 0.7));
+}
+
+.loading-text {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    font-family: Arial, sans-serif;
+    text-shadow: 0 0 10px rgba(90, 138, 198, 0.8);
+    letter-spacing: 1px;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(90, 138, 198, 0.2);
+    border-radius: 50%;
+    border-top-color: #5A8AC6;
+    border-left-color: #A0C8FF;
+    animation: spin 1.2s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(90, 138, 198, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(90, 138, 198, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(90, 138, 198, 0);
+    }
+}
+
+/* 移動設備響應式樣式 */
+@media only screen and (max-width: 768px) {
+    .loading-container {
+        padding: 30px;
+    }
+    
+    .logo-container {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 20px;
+    }
+    
+    .loading-text {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+    
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .loading-container {
+        padding: 20px;
+        width: 80%;
+    }
+    
+    .logo-container {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+    
+    .loading-text {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
+    }
+}
+
+/* 隱藏Mapbox Logo -------------------------------- */
+.mapboxgl-ctrl-logo {
+    display: none !important;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* .mapboxgl-ctrl button.mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon{
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='29' height='29' viewBox='0 0 29 29' xmlns='http://www.w3.org/2000/svg' fill='white'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3h1zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16h1zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5H13zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1V7.5z'/%3E%3C/svg%3E") !important;
+} */
+
+.mapboxgl-ctrl button .mapboxgl-ctrl-icon{
+	/* background-color: black !important; */
+	opacity: .8 !important;;
+}
+
+@media only screen and (max-width: 500px) {
+
+    .mobile_station_scroll{
+        overflow-y: scroll;
+        max-height:200px;
+        font-size: 10px;
+    }
+
+}
+
+/* 巴士站點信息滾動樣式 */
+.mobile_station_scroll {
+    overflow-y: auto;
+    max-height: 300px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+.mobile_station_scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mobile_station_scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mobile_station_scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+/* 實時巴士信息樣式 */
+.real-time-info {
+    margin-top: 8px;
+}
+
+.real-time-info ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.real-time-info li {
+    margin-bottom: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* 巴士站點彈窗樣式優化 */
+.mapboxgl-popup {
+    max-width: 300px !important;
+}
+
+.mapboxgl-popup-content {
+    padding: 12px !important;
+    max-height: 600px;
+    overflow: visible;
+}
+
+.mapboxgl-popup-content img {
+    max-height: 150px;
+    object-fit: cover;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+    .mobile_station_scroll {
+        max-height: 200px;
+        font-size: 10px;
+    }
+    
+    .mapboxgl-popup {
+        max-width: 250px !important;
+    }
+    
+    .mapboxgl-popup-content {
+        padding: 8px !important;
+        max-height: 400px;
+    }
+    
+    .mapboxgl-popup-content img {
+        max-height: 120px;
+    }
+}
+
+/* show current time box */
+#current-time {
+	color: white;
+	font-family: monospace;
+	font-size: 1.2em;
+	font-weight: 200;
+}
+#current-date {
+	color: white;
+	font-family: monospace;
+	font-size: .8em;
+}
+#current-time-box{
+	background-color: black;
+	opacity: .6;
+	border-radius: 1em;
+	display: flex;
+	position: fixed;
+	z-index: 999;
+	top: 10px;
+	left: 10px;
+	margin: 10px;
+	padding: 15px;
+	flex-wrap: wrap;
+	width: 135px;
+	justify-content: center;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#api-time-indicator {
+    color: #ffcc00;
+    font-family: monospace;
+    font-size: 0.7em;
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+/* map panel css */
+#map_panel{
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 5;
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 10px;
+}
+
+.panel_button{
+	width: 29px;
+	height: 29px;
+	background-color: #fff;
+	border-radius: 4px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	color: #666;
+	transition: background-color 0.3s;
+}
+
+/* 搜索模态框样式 */
+.search-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.search-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+}
+
+.search-box {
+    background-color: #242424;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.route-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#route-select,
+#direction-select {
+    width: 100%;
+    padding: 10px;
+    background-color: #363636;
+    border: 1px solid #404040;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#direction-select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.search-buttons {
+    text-align: right;
+}
+
+.search-buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #464646;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+#search-confirm {
+    background-color: #404040;
+}
+
+#search-confirm:hover {
+    background-color: #505050;
+}
+
+#search-cancel {
+    background-color: #242424;
+}
+
+#search-cancel:hover {
+    background-color: #404040;
+}
+
+/* 搜索按钮样式 */
+#search-route-button {
+    background-color: #fff;
+}
+
+#search-route-button:hover {
+    background-color: rgba(0,0,0,.2);
+}
+
+/* 搜索图标样式 */
+#search-route-button i {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666666'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
+    width: 18px;
+    height: 18px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 1.2em;
+}
+
+/* 地图点标记按钮初始状态 */
+#add-map-point-button {
+    display: none;
+}
+
+/* 地图点标记模态框样式 */
+.map-point-box {
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.map-point-box h3, .map-point-box h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.percentage-controls {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.percentage-slider-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.percentage-slider-container label {
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.percentage-slider {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+.point-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.search-button {
+    padding: 8px 15px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #357ae8;
+}
+
+/* 路线选择器样式 */
+#route-selector {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+#route-selector::-webkit-scrollbar {
+    width: 6px;
+}
+
+#route-selector::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#route-selector::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.route-card {
+    padding: 8px 12px;
+    background-color: #363636;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #4a4a4a;
+    transition: all 0.2s ease;
+    color: #ffffff;
+}
+
+.route-card:hover {
+    background-color: #4a4a4a;
+}
+
+.route-card.selected {
+    background-color: #4a90e2;
+    color: white;
+    border-color: #3a80d2;
+}
+
+/* 百分比滑块样式 */
+.percentage-slider {
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: #363636;
+    outline: none;
+}
+
+.percentage-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4a90e2;
+    cursor: pointer;
+}
+
+.percentage-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4a90e2;
+    cursor: pointer;
+    border: none;
+}
+
+.point-buttons .button {
+    background-color: #464646;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.point-buttons .button:hover {
+    background-color: #505050;
+}
+
+@media only screen and (max-width: 500px) {
+    .map-point-box {
+        padding: 10px;
+    }
+    
+    .percentage-slider-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .percentage-slider-container label {
+        margin-bottom: 5px;
+    }
+    
+    .percentage-slider {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .point-buttons {
+        flex-direction: column;
+    }
+}
