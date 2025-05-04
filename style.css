@@ -579,3 +579,413 @@ body {
         flex-direction: column;
     }
 }
+
+/* 附近巴士站按鈕 */
+#nearby-stations-button.active {
+    background-color: #2ecc71;
+    color: white;
+}
+
+/* 半徑選擇器 */
+.radius-selector {
+    position: absolute;
+    top: 80px;
+    right: 10px;
+    background-color: #222;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.radius-title {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.radius-options {
+    display: flex;
+    gap: 5px;
+}
+
+.radius-options button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.radius-options button.active {
+    background-color: #2ecc71;
+}
+
+.radius-options button:hover {
+    background-color: #555;
+}
+
+/* 無站點消息 */
+.no-stations-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    z-index: 100;
+}
+
+.message-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-content i {
+    font-size: 20px;
+    color: #2ecc71;
+}
+
+/* 附近巴士站彈出窗口 */
+.nearby-station-popup {
+    max-width: 250px;
+}
+
+.nearby-station-popup h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.nearby-station-popup p {
+    margin: 5px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.station-image {
+    margin: 10px 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bus-routes h4 {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.popup-actions {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.route-to-station-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.route-to-station-btn:hover {
+    background-color: #2980b9;
+}
+
+/* 地圖選擇消息 */
+.map-selection-message {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    z-index: 100;
+    text-align: center;
+}
+
+/* 路線規劃按鈕 */
+#route-navigation-button.active {
+    background-color: #3498db;
+    color: white;
+}
+
+/* 導航選擇界面 */
+.navigation-selection {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #222;
+    border-radius: 6px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.navigation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #333;
+}
+
+.navigation-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 16px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: white;
+}
+
+.navigation-body {
+    padding: 15px;
+}
+
+.location-inputs {
+    margin-bottom: 15px;
+}
+
+.location-input {
+    margin-bottom: 12px;
+}
+
+.location-input label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.location-input select,
+.location-input input {
+    width: 100%;
+    padding: 8px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.location-input select:focus,
+.location-input input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+#custom-start,
+#custom-end,
+#station-selection {
+    margin-top: 8px;
+}
+
+.navigation-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#calculate-route-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#calculate-route-btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+#calculate-route-btn:not(:disabled):hover {
+    background-color: #2980b9;
+}
+
+/* 路線信息面板 */
+.route-info-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: #222;
+    border-radius: 6px;
+    max-width: 300px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.route-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #333;
+}
+
+.route-info-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 16px;
+}
+
+.route-info-body {
+    padding: 15px;
+}
+
+#route-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.route-summary {
+    margin-bottom: 12px;
+}
+
+.route-stats {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 14px;
+}
+
+.estimated-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 8px;
+    background-color: #333;
+    border-radius: 4px;
+}
+
+.route-actions {
+    text-align: center;
+}
+
+#clear-route-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+}
+
+#clear-route-btn:hover {
+    background-color: #c0392b;
+}
+
+.route-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    margin-bottom: 15px;
+    gap: 10px;
+    text-align: center;
+}
+
+.route-error i {
+    color: #e74c3c;
+    font-size: 24px;
+}
+
+/* 移動設備響應式樣式 */
+@media only screen and (max-width: 768px) {
+    .radius-selector {
+        top: 70px;
+        right: 10px;
+        padding: 8px;
+    }
+    
+    .radius-title {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+    
+    .radius-options button {
+        padding: 4px 6px;
+        font-size: 11px;
+    }
+    
+    .navigation-selection {
+        top: 80px;
+        max-width: 350px;
+    }
+    
+    .route-info-panel {
+        bottom: 15px;
+        left: 15px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .radius-selector {
+        top: 60px;
+        right: 5px;
+    }
+    
+    .navigation-selection {
+        top: 60px;
+        width: 95%;
+    }
+    
+    .location-input label,
+    .location-input select,
+    .location-input input {
+        font-size: 13px;
+    }
+    
+    .route-info-panel {
+        bottom: 10px;
+        left: 10px;
+        max-width: 250px;
+    }
+    
+    .stat-item,
+    .estimated-time {
+        font-size: 12px;
+    }
+}
